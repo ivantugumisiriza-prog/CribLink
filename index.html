@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CribLink | Safe, affordable rooms near Makerere</title>
+<style>
+/* ===== COLOURS: red, purple, green (change here to restyle everything) ===== */
+:root{--bg:#faf8fc;--card:#fff;--ink:#231b2e;--mute:#665c72;--red:#d7263d;--purple:#5b2a86;--green:#1d8a4e;--on:#fff;--soft:#f3eef8;--line:#ddd3e8;--ph:#e6deee;--hero:#4a1f70}
+[data-theme=dark]{--bg:#16101d;--card:#20172b;--ink:#f1ebf7;--mute:#b3a7c1;--red:#ff5c70;--purple:#c79cf0;--green:#4cc983;--on:#1a0f24;--soft:#2a1f38;--line:#43355a;--ph:#35294a;--hero:#2d1347}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+.page{padding-top:22px;padding-bottom:30px}
+button,input,select,textarea{font:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+
+/* header */
+header{position:sticky;top:0;z-index:20;background:var(--hero);color:#fff;border-bottom:4px solid var(--red)}
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 18px;max-width:1100px;margin:0 auto}
+.logo{font-weight:800;font-size:22px;margin-right:auto;cursor:pointer;letter-spacing:.3px}
+.logo span{color:#7ee2a8}
+#nav{display:flex;gap:6px;flex-wrap:wrap}
+.tab{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 14px;cursor:pointer}
+.tab.on{background:var(--red);border-color:var(--red);color:var(--on)}
+
+/* buttons */
+.btn{display:inline-block;background:var(--red);color:var(--on);border:0;border-radius:10px;padding:11px 20px;cursor:pointer;font-weight:600;margin:4px 6px 4px 0}
+.btn.green{background:var(--green);color:var(--on)}
+.btn.purple{background:var(--purple);color:var(--on)}
+.btn.ghost{background:transparent;color:var(--purple);border:2px solid var(--purple)}
+.btn.hero-ghost{background:transparent;color:#fff;border:2px solid #fff}
+.btn.full{width:100%;margin:6px 0 0}
+.btn.sm{padding:7px 12px;font-size:14px}
+.btn.danger{background:transparent;color:var(--red);border:2px solid var(--red)}
+
+/* hero */
+.hero{background:var(--hero);color:#fff;padding:56px 0 62px;border-bottom:6px solid var(--green)}
+.hero .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+.hi{color:#7ee2a8;font-weight:600;margin:0 0 8px}
+.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.08;margin:0 0 14px}
+.hero p.lead{font-size:18px;color:#e9dff5;max-width:540px;margin:0 0 20px}
+.sbox{display:flex;gap:8px;background:#fff;border-radius:12px;padding:8px;max-width:540px;margin-bottom:14px}
+.sbox input{margin:0;border:0;flex:1;background:#fff;color:#231b2e;min-width:0}
+.sbox .btn{margin:0}
+.hstats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hstats div{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:16px;color:#e9dff5}
+.hstats strong{display:block;font-size:32px;color:#fff}
+.hstats div:nth-child(1) strong{color:#ff8b9a}
+.hstats div:nth-child(2) strong{color:#7ee2a8}
+
+/* sections */
+.sec{padding:44px 0}
+.sec.alt{background:var(--soft)}
+.sec h2{font-size:27px;color:var(--purple);margin:0 0 6px}
+.sub{color:var(--mute);margin:0 0 22px}
+.areas{display:flex;gap:8px;flex-wrap:wrap}
+.pill{border:2px solid var(--purple);color:var(--purple);background:transparent;border-radius:999px;padding:7px 16px;cursor:pointer;font-weight:600}
+.pill:hover,.pill.on{background:var(--purple);color:var(--on)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column}
+.card .ph{height:160px;border-radius:0}
+.card .in{padding:12px 14px}
+.card h3{margin:0 0 4px;font-size:17px;color:var(--purple)}
+.card p{margin:0;font-size:14px;color:var(--mute)}
+.price{font-weight:700;color:var(--red)!important;font-size:16px!important}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.step i{display:flex;width:36px;height:36px;border-radius:50%;background:var(--red);color:var(--on);align-items:center;justify-content:center;font-style:normal;font-weight:700;margin-bottom:10px}
+.step:nth-child(2) i{background:var(--purple)}
+.step:nth-child(3) i{background:var(--green)}
+.step h3{margin:0 0 4px;font-size:17px}
+.step p{margin:0;color:var(--mute);font-size:15px}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.feat div{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--red);border-radius:12px;padding:16px}
+.feat div:nth-child(2){border-top-color:var(--purple)}
+.feat div:nth-child(3){border-top-color:var(--green)}
+.feat h3{margin:0 0 4px;font-size:17px}
+.feat p{margin:0;color:var(--mute);font-size:15px}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start}
+.quote{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--green);border-radius:10px;padding:14px;margin-bottom:12px}
+.quote small{color:var(--mute)}
+.tips{margin:0;padding-left:20px}
+.tips li{margin-bottom:8px}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+summary{cursor:pointer;font-weight:600;color:var(--purple)}
+details p{margin:8px 0 0;color:var(--mute)}
+footer{background:var(--hero);color:#e9dff5;padding:26px 0;border-top:6px solid var(--red);margin-top:20px;font-size:14px}
+footer b{color:#fff}
+
+/* shared pieces */
+.screen{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:20px;margin-bottom:18px}
+.screen>h2{color:var(--purple);font-size:20px;margin:0 0 12px}
+.note{color:var(--mute);font-size:14px;margin:0 0 12px}
+label{font-size:14px;color:var(--mute);display:block;margin-bottom:3px}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);margin-bottom:10px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.chips select{width:auto;margin:0;border-radius:999px;padding:7px 12px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.chip.on{background:var(--green);color:var(--on);border-color:var(--green)}
+.item{display:flex;gap:14px;background:var(--soft);border-radius:12px;padding:12px;margin-bottom:12px;cursor:pointer;border:1px solid transparent}
+.item:hover{border-color:var(--purple)}
+.item .ph{width:130px;min-height:100px;flex:none}
+.item h3{margin:0 0 4px;font-size:17px;color:var(--purple)}
+.item p{margin:0;font-size:14px;color:var(--mute)}
+.ph{background:var(--ph);color:var(--mute);display:flex;align-items:center;justify-content:center;border-radius:10px;text-align:center;font-size:14px;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.big{height:320px;margin-bottom:10px}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.thumbs img{width:76px;height:60px;object-fit:cover;border-radius:8px;cursor:pointer;border:3px solid transparent}
+.thumbs img.on{border-color:var(--red)}
+.tag{display:inline-block;border:1px solid var(--green);color:var(--green);border-radius:5px;padding:0 7px;font-size:12px;margin:6px 6px 0 0;font-weight:600}
+.tag.no{border-color:var(--red);color:var(--red)}
+.box{background:var(--soft);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:15px}
+.box b{display:block;margin-bottom:3px;color:var(--purple)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+table{width:100%;border-collapse:collapse;margin-bottom:12px;font-size:14px}
+th{background:var(--purple);color:var(--on);text-align:left}
+th,td{border:1px solid var(--line);padding:8px 10px}
+iframe{width:100%;height:260px;border:0;border-radius:12px;margin-bottom:10px}
+.thumbw{position:relative;display:inline-block;margin:0 8px 8px 0}
+.thumbw img{width:110px;height:84px;object-fit:cover;border-radius:8px;display:block}
+.thumbw .x{position:absolute;top:-6px;right:-6px;width:24px;height:24px;border-radius:50%;border:0;background:var(--red);color:var(--on);cursor:pointer;font-weight:700;line-height:1}
+.drop{border:2px dashed var(--purple);border-radius:12px;padding:14px;margin-bottom:12px;background:var(--soft)}
+.drop input{border:0;background:transparent;margin-bottom:6px}
+
+/* login */
+.login{min-height:calc(100vh - 70px);display:grid;grid-template-columns:1.2fr 1fr}
+.login .left{background:var(--hero);color:#fff;padding:60px 40px;display:flex;flex-direction:column;justify-content:center;border-right:6px solid var(--green)}
+.login .left h1{font-size:clamp(30px,4vw,46px);line-height:1.1;margin:0 0 12px}
+.login .left p{color:#e9dff5;font-size:18px;max-width:440px}
+.login .right{display:flex;align-items:center;justify-content:center;padding:30px}
+.login form{width:100%;max-width:380px}
+
+#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--purple);color:var(--on);padding:11px 18px;border-radius:10px;display:none;max-width:90%;z-index:50}
+
+@media(max-width:760px){
+ .hero .wrap,.two,.login,.cols{grid-template-columns:1fr}
+ .login .left{padding:34px 22px}
+ .item{flex-direction:column}.item .ph{width:100%;height:150px}
+ .big{height:220px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="logo" id="logo">Crib<span>Link</span></div>
+    <div id="nav"></div>
+    <button class="tab" id="themeBtn" type="button">Dark theme</button>
+  </div>
+</header>
+<div id="app"></div>
+<div id="toast" role="status"></div>
+
+<script>
+/* =====================================================================
+   SAMPLE DATA. Every listing can be edited inside the app (Edit button).
+   Use "Export to share" to make a copy of this page with your edits inside.
+   ===================================================================== */
+/*DATA_START*/const defaults = [
+  {id:1,name:"Sample listing A",area:"Kikoni",rent:350000,fees:40000,dist:0.8,type:"Single room",verified:true,water:"Running water",security:"Gate and guard",shuttle:"None",quality:"Good",safety:4,rooms:3,landlord:"Landlord A",phone:"+256 700 000 001",review:"Quiet, clean and close to the main gate.",imgs:[]},
+  {id:2,name:"Sample listing B",area:"Wandegeya",rent:250000,fees:30000,dist:1.5,type:"Shared room",verified:true,water:"Tank water",security:"Gate only",shuttle:"Morning shuttle",quality:"Fair",safety:3,rooms:5,landlord:"Landlord B",phone:"+256 700 000 002",review:"Affordable, but the water runs out some evenings.",imgs:[]},
+  {id:3,name:"Sample listing C",area:"Kivulu",rent:450000,fees:60000,dist:0.5,type:"Self-contained",verified:false,water:"Running water",security:"Guard and CCTV",shuttle:"None",quality:"Good",safety:5,rooms:1,landlord:"Landlord C",phone:"+256 700 000 003",review:"No reviews yet. Listing not yet verified.",imgs:[]}
+];/*DATA_END*/
+const contactsExtra = [
+  {role:"Hostel caretaker",name:"Caretaker (sample)",phone:"+256 700 000 010"},
+  {role:"Campus housing office",name:"Housing office (sample)",phone:"+256 700 000 020"}
+];
+const AREAS = ["Kikoni","Wandegeya","Kivulu","Makerere Hill","Mulago"];
+const TYPES = ["Single room","Shared room","Self-contained"];
+const QUALITY = ["Good","Fair","Basic"];
+
+/* ===== SAVE AND LOAD (keeps your edits and photos after refresh) ===== */
+const KEY = "criblink_listings_v2";
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(d)&&d.length)return d;}catch(e){}return null;}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(listings));}catch(e){toast("Photos are too large to keep after refresh. Use fewer or smaller photos.");}}
+let listings = load() || defaults;
+
+/* ===== STATE AND HELPERS ===== */
+const S = {user:null,view:"home",sel:null,pi:0,saved:[],cmp:[],edit:null,draft:[],f:{q:"",verified:false,type:"",price:"",dist:""}};
+const $ = s => document.querySelector(s);
+const esc = t => String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ugx = n => "UGX " + Number(n).toLocaleString();
+const total = l => l.rent + l.fees;
+const mapUrl = q => "https://www.google.com/maps?q=" + encodeURIComponent(q) + "&output=embed";
+const first = l => (l.imgs && l.imgs[0]) ? `<img src="${l.imgs[0]}" alt="${esc(l.name)}">` : "No photo yet";
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display="none",2600);}
+function opts(list,cur){return list.map(o=>`<option ${o===cur?"selected":""}>${o}</option>`).join("");}
+
+/* Shrinks photos so they fit in the browser storage */
+function readPhotos(files){
+  return Promise.all([...files].map(f=>new Promise(res=>{
+    const r=new FileReader();
+    r.onload=()=>{const im=new Image();
+      im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height));const c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);res(c.toDataURL("image/jpeg",0.72));};
+      im.onerror=()=>res(null);im.src=r.result;};
+    r.onerror=()=>res(null);r.readAsDataURL(f);
+  }))).then(a=>a.filter(Boolean));
+}
+
+/* ===== THEME SWITCHER ===== */
+$("#themeBtn").onclick=()=>{
+  const dark=document.documentElement.dataset.theme!=="dark";
+  document.documentElement.dataset.theme=dark?"dark":"light";
+  $("#themeBtn").textContent=dark?"Light theme":"Dark theme";
+};
+
+/* ===== CARDS ===== */
+function cardV(l){
+  return `<div class="card" data-act="open" data-id="${l.id}">
+    <div class="ph">${first(l)}</div>
+    <div class="in"><h3>${esc(l.name)}</h3>
+      <p class="price">${ugx(total(l))} per month</p>
+      <p>${l.dist} km from campus, ${esc(l.area)}</p>
+      <span class="tag ${l.verified?"":"no"}">${l.verified?"Verified":"Not yet verified"}</span><span class="tag">${l.rooms} available</span></div></div>`;
+}
+function cardH(l){
+  return `<div class="item" data-act="open" data-id="${l.id}">
+    <div class="ph">${first(l)}</div>
+    <div><h3>${esc(l.name)}</h3>
+      <p class="price" style="color:var(--red);font-weight:700">Price incl. fees: ${ugx(total(l))}</p>
+      <p>${l.dist} km from campus, ${esc(l.area)}</p>
+      <p>${esc(l.type)}, quality: ${esc(l.quality)}</p>
+      <span class="tag ${l.verified?"":"no"}">${l.verified?"Verified":"Not yet verified"}</span><span class="tag">${l.rooms} room${l.rooms==1?"":"s"} available</span></div></div>`;
+}
+
+/* ===== LOGIN ===== */
+function loginView(){
+  return `<div class="login">
+    <div class="left"><h1>Find a safe, affordable room near campus.</h1>
+      <p>CribLink shows real prices, honest fees, verified rooms and safety ratings, so you can choose with confidence.</p></div>
+    <div class="right"><form id="login" class="screen">
+      <h2>Log in to CribLink</h2>
+      <p class="note">Prototype only: any email and password will work.</p>
+      <label for="em">Email</label><input id="em" type="email" placeholder="student@students.mak.ac.ug" required>
+      <label for="pw">Password</label><input id="pw" type="password" placeholder="Password" required>
+      <button class="btn full" type="submit">Log in</button></form></div></div>`;
+}
+
+/* ===== FRONT PAGE ===== */
+function homeView(){
+  const avail=listings.reduce((a,l)=>a+l.rooms,0);
+  const ver=listings.filter(l=>l.verified).length;
+  const low=listings.length?ugx(Math.min(...listings.map(total))):"None";
+  const feat=[...listings].sort((a,b)=>b.verified-a.verified).slice(0,6);
+  return `
+  <section class="hero"><div class="wrap">
+    <div><p class="hi">Welcome, ${esc(S.user)}</p>
+      <h1>Find a safe and affordable room near Makerere University.</h1>
+      <p class="lead">Compare prices with all fees shown, check safety and water, see real photos of the hostel and building, and contact the landlord, all in one place.</p>
+      <div class="sbox"><input id="hq" placeholder="Search by area, name or room type" aria-label="Search rooms"><button class="btn" data-act="heroSearch">Search rooms</button></div>
+      <button class="btn green" data-go="search">Browse all rooms</button>
+      <button class="btn hero-ghost" data-go="add">Add your hostel</button></div>
+    <div class="hstats">
+      <div><strong>${listings.length}</strong>Listings</div>
+      <div><strong>${avail}</strong>Available rooms</div>
+      <div><strong>${ver}</strong>Verified listings</div>
+      <div><strong style="font-size:20px;padding-top:8px">${low}</strong>Lowest monthly price</div></div>
+  </div></section>
+
+  <section class="sec"><div class="wrap">
+    <h2>Popular areas near campus</h2><p class="sub">Tap an area to see the rooms there.</p>
+    <div class="areas">${AREAS.map(a=>`<button class="pill" data-act="area" data-q="${a}">${a}</button>`).join("")}</div></div></section>
+
+  <section class="sec alt"><div class="wrap">
+    <h2>Featured rooms</h2><p class="sub">Verified rooms come first. All prices below are sample data.</p>
+    <div class="grid">${feat.map(cardV).join("")}</div>
+    <p style="margin-top:18px"><button class="btn purple" data-go="search">See all rooms</button></p></div></section>
+
+  <section class="sec"><div class="wrap">
+    <h2>How CribLink works</h2><p class="sub">From searching to moving in, in three steps.</p>
+    <div class="steps">
+      <div class="step"><i>1</i><h3>Search and filter</h3><p>Filter by price, distance, room type and verified rooms.</p></div>
+      <div class="step"><i>2</i><h3>Compare side by side</h3><p>Put up to three rooms in one table: price with fees, water, security and safety.</p></div>
+      <div class="step"><i>3</i><h3>Contact and view</h3><p>Message the landlord and request a viewing date before you pay anything.</p></div></div></div></section>
+
+  <section class="sec alt"><div class="wrap">
+    <h2>Why students choose CribLink</h2><p class="sub">Built around the problems students told us about.</p>
+    <div class="feat">
+      <div><h3>Honest prices</h3><p>Rent and extra fees are shown in full, with the total per month.</p></div>
+      <div><h3>Verified rooms</h3><p>Rooms are marked Verified or Not yet verified, so you know what was checked.</p></div>
+      <div><h3>Safety ratings</h3><p>Guards, gates, lighting and CCTV are summed into a rating out of 5.</p></div>
+      <div><h3>Real photos</h3><p>See the room and the building before you travel to view it.</p></div>
+      <div><h3>Close to campus</h3><p>Every listing shows its distance to Makerere and a small map.</p></div>
+      <div><h3>Tenant reviews</h3><p>Read what current tenants say about water, noise and security.</p></div></div></div></section>
+
+  <section class="sec"><div class="wrap two">
+    <div><h2>Where is everything?</h2><p class="sub">Makerere University and the surrounding student areas.</p>
+      <iframe title="Map of Makerere University" loading="lazy" src="${mapUrl("Makerere University, Kampala")}"></iframe></div>
+    <div><h2>Student voices</h2><p class="sub">Sample comments for the prototype.</p>
+      <div class="quote">"I wasted two weekends visiting rooms that were not as advertised."<br><small>First-year student (sample)</small></div>
+      <div class="quote">"The hidden fees surprised me after I paid the deposit."<br><small>Second-year student (sample)</small></div>
+      <div class="quote">"I want to know if the gate is guarded at night."<br><small>Final-year student (sample)</small></div></div></div></section>
+
+  <section class="sec alt"><div class="wrap two">
+    <div><h2>Safety tips before you pay</h2><p class="sub">Simple checks every student should do.</p>
+      <ul class="tips">
+        <li>Visit the room in person, in daylight and again at night.</li>
+        <li>Ask for the total monthly cost, including every fee.</li>
+        <li>Check the water supply, the lock on your door and the gate.</li>
+        <li>Never send money before you have seen the room and the landlord.</li>
+        <li>Take a friend, and tell someone where you are going.</li></ul></div>
+    <div><h2>Questions</h2><p class="sub">Quick answers.</p>
+      <details><summary>Are these real listings?</summary><p>No. This is a low-fidelity prototype, so all listings, prices and contacts are sample data.</p></details>
+      <details><summary>How is a room verified?</summary><p>In the full product, the CribLink team would visit the room and confirm photos, price and safety features.</p></details>
+      <details><summary>Can landlords add rooms?</summary><p>Yes. Use Add listing to add rooms, photos and contacts, or Edit on any listing.</p></details>
+      <details><summary>Does it cost money?</summary><p>Searching and comparing are free for students in this prototype.</p></details></div></div></section>
+
+  <footer><div class="wrap"><b>CribLink</b>, IST2106 Technopreneurship and Digital Marketing, Group 11. Low-fidelity prototype. All data is SAMPLE DATA, not research findings.</div></footer>`;
+}
+
+/* ===== SEARCH ===== */
+function searchView(){
+  const f=S.f;
+  return `<section class="screen"><h2>Screen 1: Search</h2>
+    <input id="q" placeholder="Search rooms near Makerere University" value="${esc(f.q)}" aria-label="Search rooms">
+    <div class="chips">
+      <select id="fp" aria-label="Price"><option value="">Price</option>${[300000,400000,500000,600000].map(v=>`<option value="${v}" ${+f.price===v?"selected":""}>Up to ${ugx(v)}</option>`).join("")}</select>
+      <select id="fd" aria-label="Distance"><option value="">Distance</option>${[1,2].map(v=>`<option value="${v}" ${+f.dist===v?"selected":""}>Within ${v} km</option>`).join("")}</select>
+      <select id="ft" aria-label="Room type"><option value="">Room type</option>${opts(TYPES,f.type)}</select>
+      <button class="chip ${f.verified?"on":""}" id="fv" type="button">Verified only</button>
+      <button class="chip" data-act="clear" type="button">Clear filters</button></div>
+    <div id="list"></div></section>`;
+}
+function drawList(){
+  const f=S.f,q=f.q.toLowerCase();
+  const r=listings.filter(l=>(!q||(l.name+l.area+l.type).toLowerCase().includes(q))&&(!f.verified||l.verified)&&(!f.type||l.type===f.type)&&(!f.price||total(l)<=+f.price)&&(!f.dist||l.dist<=+f.dist));
+  $("#list").innerHTML=r.length?r.map(cardH).join(""):`<p class="note">No rooms match. Clear a filter to see more.</p>`;
+}
+
+/* ===== LISTING DETAILS ===== */
+function detailView(){
+  const l=listings.find(x=>x.id===S.sel);
+  if(!l){S.view="search";return searchView();}
+  const imgs=l.imgs||[];
+  const main=imgs[S.pi]?`<img src="${imgs[S.pi]}" alt="${esc(l.name)} photo">`:"No photo yet. Choose Edit listing and photos to add some.";
+  const inCmp=S.cmp.includes(l.id),isSaved=S.saved.includes(l.id);
+  return `<section class="screen"><h2>Screen 2: Listing details</h2>
+    <div class="ph big">${main}</div>
+    <div class="thumbs">${imgs.map((s,i)=>`<img src="${s}" class="${i===S.pi?"on":""}" data-act="thumb" data-i="${i}" alt="Photo ${i+1}">`).join("")}</div>
+    <div class="cols">
+      <div class="box"><b>${esc(l.name)}</b>Rent: ${ugx(l.rent)}<br>Extra fees: ${ugx(l.fees)} (shown in full)<br><strong>Total per month: ${ugx(total(l))}</strong><br>Distance to campus: ${l.dist} km<br>Room type: ${esc(l.type)}<br>Available rooms: ${l.rooms}<br><span class="tag ${l.verified?"":"no"}">${l.verified?"Verified":"Not yet verified"}</span></div>
+      <div class="box"><b>Room details</b>Water: ${esc(l.water)}<br>Security: ${esc(l.security)}<br>Shuttle: ${esc(l.shuttle)}<br>Room quality: ${esc(l.quality)}<br>Safety rating: ${l.safety} out of 5</div></div>
+    <div class="box"><b>Location (small map): ${esc(l.area)}</b></div>
+    <iframe title="Map of ${esc(l.area)}" loading="lazy" src="${mapUrl(l.area+", Kampala, Uganda")}"></iframe>
+    <div class="box"><b>Stakeholder contacts</b>Landlord: ${esc(l.landlord)}, ${esc(l.phone)}<br>${contactsExtra.map(c=>`${c.role}: ${esc(c.name)}, ${c.phone}`).join("<br>")}</div>
+    <div class="box"><b>Tenant reviews</b>${esc(l.review)}</div>
+    <button class="btn full" data-act="contact">Contact landlord</button>
+    <p style="margin:12px 0 0">
+      <button class="btn ghost sm" data-act="save">${isSaved?"Remove from saved":"Save listing"}</button>
+      <button class="btn ghost sm" data-act="cmp">${inCmp?"Remove from compare":"Add to compare"}</button>
+      <button class="btn ghost sm" data-act="report">Report listing</button>
+      <button class="btn green sm" data-act="edit">Edit listing and photos</button></p>
+    <div class="box" style="margin-top:14px"><b>Request a viewing</b>
+      <label for="vd">Preferred date</label><input id="vd" type="date">
+      <button class="btn purple full" data-act="view">Request viewing</button></div>
+    <button class="btn ghost sm" data-go="search">Back to search</button></section>`;
+}
+
+/* ===== SAVED AND COMPARE ===== */
+function savedView(){
+  const r=listings.filter(l=>S.saved.includes(l.id));
+  return `<section class="screen"><h2>Saved rooms</h2>${r.length?r.map(cardH).join(""):`<p class="note">Nothing saved yet. Open a listing and choose Save listing.</p>`}</section>`;
+}
+function compareView(){
+  const r=listings.filter(l=>S.cmp.includes(l.id));
+  const rows=[["Price incl. fees",l=>ugx(total(l))],["Distance",l=>l.dist+" km"],["Room quality",l=>l.quality],["Safety rating",l=>l.safety+" / 5"],["Water",l=>l.water],["Security",l=>l.security],["Shuttle",l=>l.shuttle],["Available rooms",l=>l.rooms],["Verified",l=>l.verified?"Yes":"Not yet"]];
+  const body=r.length<2?`<p class="note">Add at least two listings to compare. Open a listing and choose Add to compare.</p>`:
+    `<div style="overflow-x:auto"><table><tr><th>Feature</th>${r.map(l=>`<th>${esc(l.name)}</th>`).join("")}</tr>${rows.map(x=>`<tr><td>${x[0]}</td>${r.map(l=>`<td>${esc(x[1](l))}</td>`).join("")}</tr>`).join("")}</table></div>`;
+  return `<section class="screen"><h2>Screen 3: Comparison</h2>${body}<button class="btn full" data-go="search">Choose a room to view</button></section>`;
+}
+
+/* ===== ADD AND EDIT LISTING (with photos) ===== */
+function formView(){
+  const l=S.edit?listings.find(x=>x.id===S.edit):null;
+  const v=(k,d="")=>l?esc(l[k]):d;
+  return `<form id="editForm" class="screen"><h2>${l?"Edit listing and photos":"Add listing"}</h2>
+    <p class="note">Add photos of the hostel, the rooms and the building. They are saved in this browser.</p>
+    <div class="drop"><label for="photoIn"><b>Photos of the hostel and building</b> (you can choose many)</label>
+      <input id="photoIn" type="file" accept="image/*" multiple>
+      <div id="draftPhotos"></div></div>
+    <div class="cols">
+      <div><label for="en">Listing name</label><input id="en" value="${v("name")}" required></div>
+      <div><label for="ea">Area</label><input id="ea" value="${v("area")}" placeholder="Example: Kikoni" required></div>
+      <div><label for="er">Monthly rent (UGX)</label><input id="er" type="number" min="0" value="${v("rent")}" required></div>
+      <div><label for="ef">Extra fees (UGX)</label><input id="ef" type="number" min="0" value="${v("fees","0")}" required></div>
+      <div><label for="ed">Distance to campus (km)</label><input id="ed" type="number" min="0" step="0.1" value="${v("dist")}" required></div>
+      <div><label for="em2">Available rooms</label><input id="em2" type="number" min="0" value="${v("rooms","1")}" required></div>
+      <div><label for="et">Room type</label><select id="et">${opts(TYPES,l?l.type:"")}</select></div>
+      <div><label for="eq">Room quality</label><select id="eq">${opts(QUALITY,l?l.quality:"")}</select></div>
+      <div><label for="es">Safety rating (1 to 5)</label><select id="es">${[1,2,3,4,5].map(n=>`<option ${l&&l.safety===n||!l&&n===3?"selected":""}>${n}</option>`).join("")}</select></div>
+      <div><label for="ev">Verified?</label><select id="ev"><option value="no" ${l&&l.verified?"":"selected"}>Not yet verified</option><option value="yes" ${l&&l.verified?"selected":""}>Verified</option></select></div>
+      <div><label for="ew">Water</label><input id="ew" value="${v("water")}" placeholder="Example: Running water"></div>
+      <div><label for="ese">Security</label><input id="ese" value="${v("security")}" placeholder="Example: Gate and guard"></div>
+      <div><label for="esh">Shuttle</label><input id="esh" value="${v("shuttle")}" placeholder="Example: None"></div>
+      <div><label for="el">Landlord name</label><input id="el" value="${v("landlord")}"></div>
+      <div><label for="ep">Landlord phone</label><input id="ep" value="${v("phone")}" placeholder="+256 700 000 000"></div></div>
+    <label for="erv">Tenant review</label><textarea id="erv" rows="3">${v("review")}</textarea>
+    <button class="btn full" type="submit">Save listing</button>
+    ${l?`<button class="btn danger full" type="button" data-act="del">Delete this listing</button>`:""}
+    <button class="btn ghost full" type="button" data-go="${l?"detail":"search"}">Cancel</button></form>`;
+}
+function drawDraft(){
+  const d=$("#draftPhotos");if(!d)return;
+  d.innerHTML=S.draft.length?S.draft.map((s,i)=>`<div class="thumbw"><img src="${s}" alt="Photo ${i+1}"><button type="button" class="x" data-act="rmph" data-i="${i}" aria-label="Remove photo ${i+1}">x</button></div>`).join(""):`<p class="note">No photos yet. Choose photos of the hostel and the building.</p>`;
+}
+
+/* ===== NAV AND RENDER ===== */
+function navHtml(){
+  if(!S.user)return "";
+  const t=[["home","Home"],["search","Search"],["saved","Saved ("+S.saved.length+")"],["compare","Compare ("+S.cmp.length+")"],["add","Add listing"]];
+  return t.map(x=>`<button class="tab ${S.view===x[0]?"on":""}" data-go="${x[0]}">${x[1]}</button>`).join("")+`<button class="tab" data-act="export">Export to share</button><button class="tab" data-act="logout">Log out</button>`;
+}
+function render(){
+  $("#nav").innerHTML=navHtml();
+  const app=$("#app");
+  if(!S.user){app.innerHTML=loginView();return;}
+  if(S.view==="home"){app.innerHTML=homeView();window.scrollTo(0,0);return;}
+  const v={search:searchView,detail:detailView,saved:savedView,compare:compareView,add:formView,edit:formView}[S.view];
+  app.innerHTML=`<div class="wrap page">${v()}</div>`;
+  if(S.view==="search")drawList();
+  if(S.view==="add"||S.view==="edit")drawDraft();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORT: makes a copy of this page with your edits and photos inside ===== */
+function exportPage(){
+  let html="<!DOCTYPE html>\n"+document.documentElement.outerHTML;
+  const re=new RegExp("/\\*DATA_"+"START\\*/[\\s\\S]*?/\\*DATA_"+"END\\*/");
+  const json=JSON.stringify(listings).replace(/</g,"\\u003c");
+  const data="/*DATA_"+"START*/const defaults = "+json+";/*DATA_"+"END*/";
+  html=html.replace(re,()=>data);
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([html],{type:"text/html"}));
+  a.download="CribLink-prototype.html";
+  a.click();
+  toast("Exported. Send the downloaded file to your coursemates as a Document.");
+}
+
+/* ===== EVENTS ===== */
+document.addEventListener("submit",e=>{
+  e.preventDefault();
+  if(e.target.id==="login"){S.user=$("#em").value.split("@")[0]||"student";S.view="home";render();}
+  if(e.target.id==="editForm"){
+    const o={name:$("#en").value.trim(),area:$("#ea").value.trim(),rent:+$("#er").value,fees:+$("#ef").value,dist:+$("#ed").value,type:$("#et").value,rooms:+$("#em2").value,quality:$("#eq").value,safety:+$("#es").value,verified:$("#ev").value==="yes",water:$("#ew").value||"Not stated",security:$("#ese").value||"Not stated",shuttle:$("#esh").value||"Not stated",landlord:$("#el").value||"Landlord",phone:$("#ep").value||"+256 700 000 000",review:$("#erv").value||"No reviews yet.",imgs:[...S.draft]};
+    if(S.edit){Object.assign(listings.find(x=>x.id===S.edit),o);S.sel=S.edit;}
+    else{o.id=Date.now();listings.push(o);S.sel=o.id;}
+    persist();S.pi=0;S.view="detail";toast("Listing saved");render();
+  }
+});
+document.addEventListener("input",e=>{if(e.target.id==="q"){S.f.q=e.target.value;drawList();}});
+document.addEventListener("keydown",e=>{if(e.target.id==="hq"&&e.key==="Enter"){S.f.q=e.target.value;S.view="search";render();}});
+document.addEventListener("change",e=>{
+  const m={fp:"price",fd:"dist",ft:"type"};
+  if(m[e.target.id]){S.f[m[e.target.id]]=e.target.value;drawList();}
+  if(e.target.id==="photoIn"){readPhotos(e.target.files).then(a=>{S.draft.push(...a);drawDraft();e.target.value="";});}
+});
+$("#logo").onclick=()=>{if(S.user){S.view="home";render();}};
+
+document.addEventListener("click",e=>{
+  const go=e.target.closest("[data-go]");
+  if(go){
+    const t=go.dataset.go;
+    if(t==="add"){S.edit=null;S.draft=[];}
+    if(t==="detail"&&S.sel==null){S.view="search";render();return;}
+    S.view=t;render();return;
+  }
+  if(e.target.id==="fv"){S.f.verified=!S.f.verified;e.target.classList.toggle("on",S.f.verified);drawList();return;}
+  const a=e.target.closest("[data-act]");if(!a)return;
+  const act=a.dataset.act,id=S.sel;
+  if(act==="open"){S.sel=+a.dataset.id;S.pi=0;S.view="detail";render();}
+  if(act==="thumb"){S.pi=+a.dataset.i;render();}
+  if(act==="logout"){S.user=null;S.view="home";render();}
+  if(act==="export")exportPage();
+  if(act==="heroSearch"){S.f.q=$("#hq").value;S.view="search";render();}
+  if(act==="area"){S.f={q:a.dataset.q,verified:false,type:"",price:"",dist:""};S.view="search";render();}
+  if(act==="clear"){S.f={q:"",verified:false,type:"",price:"",dist:""};render();}
+  if(act==="contact"){const l=listings.find(x=>x.id===id);toast("Message sent to "+l.landlord+" (sample)");}
+  if(act==="report"){toast("Report received. Thank you (sample)");}
+  if(act==="view"){toast($("#vd").value?"Viewing requested for "+$("#vd").value+" (sample)":"Choose a date first");}
+  if(act==="save"){S.saved=S.saved.includes(id)?S.saved.filter(x=>x!==id):[...S.saved,id];render();}
+  if(act==="cmp"){S.cmp=S.cmp.includes(id)?S.cmp.filter(x=>x!==id):[...S.cmp,id].slice(-3);render();}
+  if(act==="edit"){const l=listings.find(x=>x.id===id);S.edit=id;S.draft=[...(l.imgs||[])];S.view="edit";render();}
+  if(act==="rmph"){S.draft.splice(+a.dataset.i,1);drawDraft();}
+  if(act==="del"){if(confirm("Delete this listing?")){listings=listings.filter(x=>x.id!==S.edit);S.saved=S.saved.filter(x=>x!==S.edit);S.cmp=S.cmp.filter(x=>x!==S.edit);S.sel=null;persist();toast("Listing deleted");S.view="search";render();}}
+});
+
+render();
+</script>
+</body>
+</html>
